@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>A-frame example</title>
+
+        <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+        <script src="https://mixedreality.mozilla.org/ammo.js/builds/ammo.wasm.js"></script>
+        <script src="./dist/aframe-physics-system.js"></script>
+        <script src="./index.js"></script>
+    </head>
+
+    <body>
+        <a-scene 
+            physics="driver: ammo; gravity: -9.8;"
+            inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+            background="color: #FFF">
+            <a-assets>
+                <a-item 
+                    id="character_1" 
+                    src="./src/models/character/source/Omen.gltf">
+                </a-item>
+                <a-item 
+                    id="shrek" 
+                    src="./src/models/shrek/scene.gltf">
+                </a-item>
+                <a-item 
+                    id="sara" 
+                    src="./src/models/Sara/scene.gltf">
+                </a-item>
+                <a-item 
+                    id="grandpa" 
+                    src="./src/models/Grandpa/scene.gltf">
+                </a-item>
+            </a-assets>
+
+            <a-entity 
+                controles
+                wasd-controls="acceleration: 30;" 
+                look-controls 
+                geometry="primitive: box" 
+                material="visible: false"
+                position="0 0 0"
+                ammo-body="type: kinematic" 
+                ammo-shape="type: box">
+                <a-camera 
+                    wasd-controls-enabled="false" 
+                    look-controls-enabled="false" 
+                    position="0 1 5" 
+                    near="0.01">
+                </a-camera>
+                <a-entity 
+                    id="walker"
+                    gltf-model="#grandpa" 
+                    animation-mixer="clip: metarig|Idle(HeavyBreathing)"
+                    position="0 0 0" 
+                    rotation="0 180">
+                </a-entity>
+            </a-entity>
+
+            <a-box 
+                color="blue"
+                position="2 4 0" 
+                width="3" 
+                height="3" 
+                depth="3" 
+                ammo-body="
+                    type: dynamic; 
+                    linearDamping: 0.9;
+                    angularDamping: 0.9;
+                    mass: 1000;" 
+                ammo-shape="type: box">
+            </a-box>
+            <a-box 
+                color="green" 
+                position="1 0.8 -9"
+                ammo-body="type: dynamic" 
+                ammo-shape="type: box">
+            </a-box>
+            <a-box 
+                color="gray" 
+                position="0 0.5 -20" 
+                scale="4 0.5"
+                ammo-body="type: dynamic" 
+                ammo-shape="type: box">
+            </a-box>
+
+
+            <a-plane 
+                position="0 0 -10" 
+                rotation="-90 0 0" 
+                width="10" 
+                height="30" 
+                color="#7BC8A4"
+                shadow
+                ammo-body="type: static; mass: 0;"
+                ammo-shape="type: mesh;">
+            </a-plane>
+
+        </a-scene>
+
+    </body>
+
+</html>
